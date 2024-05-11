@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UpdateStorageContext } from "@/context/UpdateStorageContext";
 import { icons } from "lucide-react";
+import html2canvas from "html2canvas";
 
 const LogoPlayground = ({ downloadIcon }) => {
   const [storageValue, setStorageValue] = useState();
@@ -13,9 +14,22 @@ const LogoPlayground = ({ downloadIcon }) => {
 
   useEffect(() => {
     if (downloadIcon) {
-      console.log("btn is cicked");
+      downloadPngLogo();
     }
   }, [downloadIcon]);
+
+  const downloadPngLogo = () => {
+    const downloadLogoDiv = document.getElementById("download-btn");
+    html2canvas(downloadLogoDiv, {
+      backgroundColor: null,
+    }).then((canvas) => {
+      const pngImage = canvas.toDataURL("image/png");
+      const downloadLink = document.createElement("a");
+      downloadLink.href = pngImage;
+      downloadLink.download = "Sahreen_logo.png";
+      downloadLink.click();
+    });
+  };
 
   const Icon = ({ name, color, size, rotate }) => {
     const LucidIcon = icons[name];
@@ -42,6 +56,7 @@ const LogoPlayground = ({ downloadIcon }) => {
         }}
       >
         <div
+          id="download-btn"
           className="flex items-center justify-center bg-transparent h-full w-full"
           style={{
             borderRadius: storageValue?.bgRounded,
