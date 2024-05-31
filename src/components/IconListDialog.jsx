@@ -35,7 +35,7 @@ const IconListDialog = ({ selectedIcon }) => {
           <Icon name={icon} color={"#000"} size={20} />
         </div>
       </div>
-      <Dialog open={openList}>
+      <Dialog open={openList} onOpenChange={setOpenList}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Pick Your Icon</DialogTitle>
